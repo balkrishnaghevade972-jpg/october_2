@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hii pandaaa 🐼</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐼</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-step="1" class="locked">
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<div id="intro" role="button" tabindex="0" aria-label="Tap to open">
+  <div class="panda" data-mood="sad"></div>
+  <div id="hi" aria-label="hii pandaaa"></div>
+  <p id="tap">tap anywhere, this is for you</p>
+</div>
+
+<section id="hero">
+  <h1>I miss you.</h1>
+  <p id="since"></p>
+  <a class="btn main go later" id="cta" href="message.html">Continue →</a>
+</section>
+
+<script src="config.js"></script>
+<script src="common.js"></script>
+<script>
+/* intro */
+$('hi').innerHTML=[...CONFIG.intro].map((c,i)=>`<span style="--i:${i}">${c===' '?'&nbsp;':c}</span>`).join('');
+function openSite(){
+  const el=$('intro');if(el.classList.contains('gone'))return;
+  el.classList.add('gone');document.body.classList.remove('locked');setTimeout(()=>$('cta').classList.add('show'),3500);
+  setTimeout(()=>el.remove(),1500);
+}
+$('intro').addEventListener('click',openSite);
+$('intro').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')openSite()});
+
+/* live counter */
+(function(){
+  const t=new Date(CONFIG.sinceDate).getTime();
+  if(!CONFIG.sinceDate||isNaN(t)){$('since').style.display='none';return}
+  function up(){let s=Math.max(0,Math.floor((Date.now()-t)/1000));
+    const d=Math.floor(s/86400);s%=86400;const h=Math.floor(s/3600);s%=3600;const m=Math.floor(s/60);s%=60;
+    $('since').innerHTML=`<b>${d}</b> days <b>${h}</b> hours <b>${m}</b> minutes <b>${s}</b> seconds ${CONFIG.sinceLabel}`}
+  up();setInterval(up,1000);
+})();
+
+
+</script>
+</body>
+</html>

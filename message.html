@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>For you 💌</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐼</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-step="2" data-back="index.html">
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<section id="story">
+  <div class="panda" data-mood="sad" style="width:130px;margin-bottom:1.5rem"></div>
+  <div id="stage" aria-live="polite"><p class="line" id="line"></p></div>
+  <button class="soft" id="next">Continue</button>
+</section>
+
+<script src="config.js"></script>
+<script src="common.js"></script>
+<script>
+/* story: typewriter */
+let i=0,typing=false;
+const line=$('line'),next=$('next');
+function typeLine(){
+  const txt=CONFIG.story[i];typing=true;
+  line.className='line';line.textContent='';next.classList.remove('ready');
+  let k=0;
+  (function tick(){
+    if(reduce)k=txt.length;
+    line.textContent=txt.slice(0,k);
+    if(k++<txt.length)return setTimeout(tick,48);
+    line.classList.add('done');typing=false;next.classList.add('ready');
+  })();
+}
+let started=false;
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting&&!started){started=true;typeLine();o.disconnect()}},{threshold:.5}).observe($('story'));
+next.addEventListener('click',()=>{
+  if(typing)return;
+  if(i>=CONFIG.story.length-1){go('ride.html');return}
+  line.classList.add('out');
+  setTimeout(()=>{i++;typeLine();if(i===CONFIG.story.length-1)next.textContent='Continue →'},reduce?0:800);
+});
+
+
+</script>
+</body>
+</html>

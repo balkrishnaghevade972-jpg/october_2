@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Join the dots ✨</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐼</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-step="4" data-back="ride.html">
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<section id="stars">
+  <div class="rv">
+    <h2>Things I thought about<br>while I missed you</h2>
+    <p style="color:var(--mute);margin-bottom:1rem">Touch every star to join the dots.</p>
+  </div>
+  <div id="sky2" class="rv"><svg id="links" viewBox="0 0 100 100" aria-hidden="true"></svg></div>
+  <p id="thought" aria-live="polite"></p>
+  <p id="note"></p>
+  <a class="btn main go later" id="starsNext" href="end.html">Continue →</a>
+</section>
+
+
+<script src="config.js"></script>
+<script src="common.js"></script>
+<script>
+/* constellation: join the dots into a heart */
+const box=$('sky2'),svg=$('links'),N=CONFIG.thoughts.length;
+const hp=t=>({x:50+41.6*Math.pow(Math.sin(t),3),y:48-2.6*(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))});
+const pts=CONFIG.thoughts.map((_,k)=>hp(Math.PI+2*Math.PI*k/N));
+let outline='';
+for(let j=0;j<100;j++){const p=hp(Math.PI+2*Math.PI*j/100);outline+=(j?'L':'M')+p.x.toFixed(1)+' '+p.y.toFixed(1)}
+svg.innerHTML=`<path id="heart" d="${outline}Z"/>`;
+const seen=new Set();
+function link(k){
+  [[k,(k+1)%N],[(k+N-1)%N,k]].forEach(([a,b])=>{
+    if(a===b||!seen.has(a)||!seen.has(b)||$('e'+a))return;
+    svg.insertAdjacentHTML('beforeend',`<line id="e${a}" x1="${pts[a].x}" y1="${pts[a].y}" x2="${pts[b].x}" y2="${pts[b].y}" stroke="#f5b86b" stroke-opacity=".8" stroke-width=".7" stroke-linecap="round"/>`);
+  });
+}
+pts.forEach((p,k)=>{
+  const b=document.createElement('button');
+  b.className='star';b.style.left=p.x+'%';b.style.top=p.y+'%';b.style.setProperty('--d',(k*.4)+'s');
+  b.setAttribute('aria-label','Star '+(k+1));
+  b.addEventListener('click',()=>{
+    const t=$('thought');t.classList.remove('swap');void t.offsetWidth;t.textContent=CONFIG.thoughts[k];t.classList.add('swap');
+    const r=document.createElement('span');r.className='ring';b.appendChild(r);setTimeout(()=>r.remove(),1000);
+    if(seen.has(k))return;
+    seen.add(k);b.classList.add('on');link(k);
+    if(seen.size===N)setTimeout(()=>{
+      $('heart').classList.add('full');$('note').textContent=CONFIG.allDone;burst(innerWidth/2,innerHeight/2,70);$('starsNext').classList.add('show');
+    },1200);
+  });
+  box.appendChild(b);
+});
+
+
+</script>
+</body>
+</html>

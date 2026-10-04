@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Can we talk? 🐼</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐼</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-step="5" data-back="stars.html">
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<section id="end">
+  <div class="panda rv" id="endPanda" data-mood="sad"></div>
+  <h2 id="endTitle" class="rv"></h2>
+  <p id="endText" class="rv" style="max-width:28rem;color:var(--mute)"></p>
+  <div class="row rv">
+    <a class="btn main" id="talk" href="#">Talk to me</a>
+    <button class="btn" id="time">I need more time</button>
+  </div>
+  <p id="reply" aria-live="polite"></p>
+  <a class="go" href="index.html" style="margin-top:3rem;color:var(--mute);font-size:.9rem;text-decoration:none">replay from the start ↺</a>
+</section>
+
+
+<script src="config.js"></script>
+<script src="common.js"></script>
+<script>
+/* ending */
+$('endTitle').textContent=CONFIG.endTitle;
+$('endText').textContent=CONFIG.endText;
+$('talk').href=CONFIG.contactLink;
+$('talk').addEventListener('click',()=>{
+  $('endPanda').classList.add('happy');$('reply').textContent=CONFIG.talkReply;
+  burst(innerWidth/2,innerHeight*.6,90);
+});
+$('time').addEventListener('click',()=>{$('reply').textContent=CONFIG.moreTimeReply});
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remember that bus? 🚌</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐼</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&family=Work+Sans:wght@300;400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-step="3" data-back="message.html">
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<section id="ride" aria-label="The bus ride">
+  <div class="pin">
+    <div class="route" id="route"><span id="rFrom"></span><div class="rt"><i id="rfill"></i><b id="rbus">🚌</b></div><span id="rTo"></span></div>
+    <div class="ridetxt"><h2 id="rideTitle"></h2><p id="rideCap" aria-live="polite"></p></div>
+    <div id="sky1"></div>
+    <div id="sunset"></div>
+    <div class="city" id="city"></div>
+    <div id="startSign"><div class="sgn" id="sgnFrom"></div><div class="pole"></div></div>
+    <div id="stand">
+      <div id="clock"></div>
+      <svg class="sg" viewBox="0 0 150 170" aria-hidden="true">
+        <ellipse class="glow" cx="75" cy="28" rx="70" ry="46" fill="#f5b86b"/>
+        <rect x="72" y="40" width="6" height="130" fill="#8a91c4"/>
+        <rect x="16" y="4" width="118" height="42" rx="6" fill="#2b3a7a" stroke="#e8ecff" stroke-width="2"/>
+        <text id="st1" x="75" y="23" text-anchor="middle" font-size="15" font-family="Work Sans,sans-serif" fill="#fff"></text>
+        <text x="75" y="39" text-anchor="middle" font-size="10" font-family="Work Sans,sans-serif" fill="#cfd3ee">BUS STAND</text>
+        <rect x="14" y="132" width="122" height="8" rx="3" fill="#5a4a6e"/>
+        <rect x="22" y="140" width="6" height="26" fill="#5a4a6e"/><rect x="122" y="140" width="6" height="26" fill="#5a4a6e"/>
+      </svg>
+      <svg class="fig" id="fPanda" viewBox="0 0 50 70" aria-hidden="true">
+        <circle cx="10" cy="8" r="6" fill="#15151f"/><circle cx="40" cy="8" r="6" fill="#15151f"/>
+        <ellipse cx="25" cy="54" rx="15" ry="16" fill="#f7f7fb" stroke="#ccd"/>
+        <ellipse cx="9" cy="50" rx="5" ry="11" fill="#15151f"/>
+        <g class="arm"><ellipse cx="42" cy="52" rx="5" ry="11" fill="#15151f"/></g>
+        <circle cx="25" cy="22" r="16" fill="#fff" stroke="#ccd"/>
+        <ellipse cx="19" cy="21" rx="4.5" ry="6" fill="#15151f" transform="rotate(25 19 21)"/><ellipse cx="31" cy="21" rx="4.5" ry="6" fill="#15151f" transform="rotate(-25 31 21)"/>
+        <circle cx="19.5" cy="21" r="1.6" fill="#fff"/><circle cx="30.5" cy="21" r="1.6" fill="#fff"/>
+        <ellipse cx="25" cy="28" rx="3" ry="2.2" fill="#15151f"/>
+        <circle cx="13" cy="29" r="3" fill="#ff9fb8" opacity=".7"/><circle cx="37" cy="29" r="3" fill="#ff9fb8" opacity=".7"/>
+      </svg>
+      <svg class="fig" id="fBoy" viewBox="0 0 50 70" aria-hidden="true">
+        <rect x="11" y="36" width="28" height="30" rx="9" fill="#4a6fd0"/>
+        <circle cx="25" cy="22" r="14" fill="#e7b98a"/>
+        <path d="M11 20Q25 -4 39 20Q25 10 11 20Z" fill="#2a1a14"/>
+        <circle cx="20" cy="23" r="1.7" fill="#2a1a14"/><circle cx="30" cy="23" r="1.7" fill="#2a1a14"/>
+        <path d="M21 30q4 3 8 0" stroke="#2a1a14" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="ground"><div class="dash" id="dash"></div></div>
+    <div class="bus" id="bus">
+      <svg viewBox="0 0 260 120" aria-hidden="true">
+        <polygon points="250,80 430,48 430,112" fill="rgba(255,240,200,.16)"/>
+        <rect x="2" y="8" width="248" height="86" rx="16" fill="#f5b86b"/>
+        <rect x="2" y="64" width="248" height="10" fill="#d9964a"/>
+        <rect x="14" y="20" width="42" height="34" rx="6" fill="#ffe9b8"/>
+        <rect x="64" y="20" width="42" height="34" rx="6" fill="#ffe9b8"/>
+        <rect x="114" y="20" width="42" height="34" rx="6" fill="#ffe9b8"/>
+        <rect x="170" y="20" width="70" height="44" rx="8" fill="#ffe9b8"/>
+        <g transform="translate(70,20)"><g class="gp"><circle cx="4" cy="5" r="5" fill="#15151f"/><circle cx="30" cy="5" r="5" fill="#15151f"/><circle cx="17" cy="17" r="14" fill="#fff" stroke="#ccc"/><ellipse cx="11" cy="16" rx="4" ry="5" fill="#15151f"/><ellipse cx="23" cy="16" rx="4" ry="5" fill="#15151f"/><circle cx="17" cy="21" r="2.2" fill="#15151f"/></g></g>
+        <g transform="translate(120,20)"><g class="gb"><circle cx="15" cy="17" r="13" fill="#e7b98a"/><path d="M2 15Q15 -3 28 15Q15 7 2 15Z" fill="#2a1a14"/><circle cx="10" cy="17" r="1.6" fill="#2a1a14"/><circle cx="20" cy="17" r="1.6" fill="#2a1a14"/></g></g>
+        <text class="bh" x="106" y="18" font-size="13" fill="#e0264a">♥</text>
+        <rect x="176" y="9" width="58" height="9" rx="2" fill="#15151f"/>
+        <text class="brd" x="205" y="16.5" text-anchor="middle" font-size="7" fill="#ff9fb8" font-family="Work Sans,sans-serif"></text>
+        <rect x="240" y="70" width="12" height="16" rx="3" fill="#d9964a"/><circle cx="247" cy="78" r="5" fill="#fff6d0"/>
+        <circle cx="56" cy="96" r="17" fill="#12142e" stroke="#cfd3ee" stroke-width="3"/>
+        <g class="wh"><line x1="44" y1="96" x2="68" y2="96" stroke="#cfd3ee" stroke-width="2"/><line x1="56" y1="84" x2="56" y2="108" stroke="#cfd3ee" stroke-width="2"/></g>
+        <circle cx="196" cy="96" r="17" fill="#12142e" stroke="#cfd3ee" stroke-width="3"/>
+        <g class="wh"><line x1="184" y1="96" x2="208" y2="96" stroke="#cfd3ee" stroke-width="2"/><line x1="196" y1="84" x2="196" y2="108" stroke="#cfd3ee" stroke-width="2"/></g>
+      </svg>
+    </div>
+    <a class="btn main go later" id="rideNext" href="stars.html">Continue →</a>
+    <span class="hint" id="rideHint">scroll to ride ↓</span>
+  </div>
+</section>
+
+
+<script src="config.js"></script>
+<script src="common.js"></script>
+<script>
+/* the bus ride: Warananagar to Kolhapur, driven by scroll */
+const ride=$('ride'),pin=ride.querySelector('.pin'),bus=$('bus'),stand=$('stand'),dash=$('dash'),city=$('city'),cap=$('rideCap'),sunset=$('sunset');
+const busHim=bus.cloneNode(true);busHim.id='busHim';busHim.querySelector('.gp').parentNode.remove();
+const busHer=bus.cloneNode(true);busHer.id='busHer';busHer.querySelector('.gb').parentNode.remove();
+bus.after(busHer);bus.after(busHim);
+bus.querySelector('.brd').textContent=CONFIG.routeTo.toUpperCase()+' ♥';
+busHim.querySelector('.brd').textContent=CONFIG.busHimLabel;
+const hb2=busHer.querySelector('.brd');hb2.textContent=CONFIG.busHerLabel;
+hb2.setAttribute('transform','translate(205 0) scale(-1 1) translate(-205 0)');
+$('rideTitle').textContent=CONFIG.rideTitle;
+$('rFrom').textContent=CONFIG.routeFrom;$('rTo').textContent=CONFIG.routeTo;
+$('sgnFrom').textContent=CONFIG.routeFrom.toUpperCase();$('st1').textContent=CONFIG.routeTo.toUpperCase();
+const cl=(x,a=0,b=1)=>Math.min(b,Math.max(a,x)),sub=(a,b,x)=>cl((x-a)/(b-a));
+const ease=x=>x<.5?2*x*x:1-Math.pow(-2*x+2,2)/2,eOut=x=>1-(1-x)*(1-x),eIn=x=>x*x;
+const _d=new Date(CONFIG.sinceDate),endMin=isNaN(_d)?16*60+35:_d.getHours()*60+_d.getMinutes();
+const fmt=m=>{m=((m%1440)+1440)%1440;const h=Math.floor(m/60);return ((h+11)%12+1)+':'+String(m%60).padStart(2,'0')+' '+(h>=12?'pm':'am')};
+const capAt=[0,.12,.28,.42,.60,.78];
+let rf=0,lastCap=-1,lastHeart=0;
+function sendHeart(from,toX){
+  const q=from.getBoundingClientRect(),x=q.left+q.width*.45,y=q.top+q.height*.3;
+  const e=document.createElement('span');e.className='fh';e.textContent='♥';
+  e.style.cssText=`left:${x}px;top:${y}px;--dx:${(toX-x)*.6}px`;pin.appendChild(e);setTimeout(()=>e.remove(),2300);
+}
+function frame(){
+  rf=0;
+  const W=innerWidth,H=innerHeight,r=ride.getBoundingClientRect();
+  const p=cl(-r.top/(r.height-H));
+  const bw=Math.min(260,W*.4),Wc=W*.5,busStop=Wc-bw*.78,bx0=W*.08;
+  [bus,busHim,busHer].forEach(b=>b.style.width=bw+'px');
+  const CAM1=W*1.6,standWorld=CAM1+Wc-75;
+  const cam=p<.22?CAM1*ease(p/.22):CAM1;
+  const bx1=p<.22?bx0:p<.30?bx0+(busStop-bx0)*eOut(sub(.22,.30,p)):p<.36?busStop:busStop+(W+160-busStop)*eIn(sub(.36,.46,p));
+  const t1=cam+bx1,m1=p<.30||(p>.36&&p<.46);
+  bus.style.transform=`translate(${bx1}px,${m1?Math.sin(t1/18)*1.5:0}px)`;
+  bus.querySelectorAll('.wh').forEach(w=>w.style.transform=`rotate(${t1*3.4}deg)`);
+  bus.classList.toggle('empty',p>=.30);
+
+  /* her bus: far lane, heading left, stops left of the stand */
+  const herStop=Wc-95,herStart=W+bw+40,dep=eIn(sub(.78,1,p));
+  const herX=p<.60?herStart:p<.68?herStart+(herStop-herStart)*eOut(sub(.60,.68,p)):herStop-W*.9*dep;
+  const herS=.92*(1-.5*dep);
+  busHer.style.transform=`translate(${herX}px,0) scale(${-herS},${herS})`;
+  busHer.style.opacity=1-.6*dep;
+  busHer.querySelectorAll('.wh').forEach(w=>w.style.transform=`rotate(${Math.abs(herX-herStart)*3.4}deg)`);
+  busHer.classList.toggle('empty',p<.73);busHer.classList.toggle('look',p>.80);
+
+  /* his bus: near lane, heading right, stops right of the stand */
+  const himStop=Wc+95,himStart=-bw-120;
+  const himX=p<.64?himStart:p<.72?himStart+(himStop-himStart)*eOut(sub(.64,.72,p)):himStop+W*.9*dep;
+  const himS=1-.55*dep;
+  busHim.style.transform=`translate(${himX}px,0) scale(${himS})`;
+  busHim.style.opacity=1-.6*dep;
+  busHim.querySelectorAll('.wh').forEach(w=>w.style.transform=`rotate(${(himX-himStart)*3.4}deg)`);
+  busHim.classList.toggle('empty',p<.76);busHim.classList.toggle('look',p>.80);
+
+  stand.style.transform=`translateX(${standWorld-cam}px)`;
+  $('startSign').style.transform=`translateX(${W*.5-cam}px)`;
+  dash.style.backgroundPositionX=(-cam)+'px';
+  city.style.backgroundPositionX=(-cam*.35)+'px';
+  sunset.style.opacity=p<.30?0:p<.74?.55*sub(.30,.62,p):.55*(1-sub(.74,1,p));
+  $('sky1').style.opacity=p<.30?.85:p<.62?.85-.55*sub(.30,.62,p):.30*(1-sub(.62,.92,p));
+  const pr=sub(0,.22,p);
+  $('rfill').style.width=pr*100+'%';$('rbus').style.left=pr*100+'%';
+  $('route').style.opacity=1-sub(.3,.45,p);
+
+  /* the two of them on the bench, then boarding opposite buses */
+  const a=ease(sub(.31,.36,p)),bdHer=ease(sub(.68,.73,p)),bdHim=ease(sub(.72,.76,p));
+  const fp=$('fPanda'),fb=$('fBoy');
+  fp.style.opacity=a*(1-bdHer);fp.style.translate=`${-75*bdHer}px ${(1-a)*40+40*bdHer}px`;
+  fb.style.opacity=a*(1-bdHim);fb.style.translate=`${85*bdHim}px ${(1-a)*40+40*bdHim}px`;
+  const mins=Math.round(CONFIG.waitMinutes*sub(.38,.62,p));
+  const tod=endMin-CONFIG.waitMinutes+mins;
+  $('clock').innerHTML=p<.64?`🕐 <b>${fmt(tod)}</b> · waiting <b>${Math.floor(mins/60)}h ${String(mins%60).padStart(2,'0')}m</b>`:`🕐 <b>${fmt(endMin)}</b> · the last time I saw you`;
+  $('clock').classList.toggle('on',p>=.34&&p<.92);
+  stand.classList.toggle('lit',p>=.76);
+  $('rideHint').style.opacity=p>.02?0:1;
+  $('rideNext').classList.toggle('show',p>.94);
+
+  /* hearts drifting between the two windows */
+  const now=Date.now();
+  if(!reduce&&p>.80&&p<.97&&now-lastHeart>400){lastHeart=now;sendHeart(busHim,Wc);sendHeart(busHer,Wc)}
+
+  let c=0;capAt.forEach((v,k)=>{if(p>=v)c=k});
+  if(c!==lastCap){lastCap=c;cap.classList.remove('swap');void cap.offsetWidth;cap.textContent=CONFIG.rideCaptions[c];cap.classList.add('swap')}
+}
+const req=()=>{if(!rf)rf=requestAnimationFrame(frame)};
+addEventListener('scroll',req,{passive:true});addEventListener('resize',req);frame();
+
+
+</script>
+</body>
+</html>
